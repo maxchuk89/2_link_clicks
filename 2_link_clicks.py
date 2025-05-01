@@ -17,12 +17,12 @@ def shorten_link(token, url):
 
     response = requests.get(api_url, params=params)
     response.raise_for_status()
-    response_json = response.json()
+    decoded_response = response.json()
 
-    if 'error' in response_json:
-        raise requests.exceptions.HTTPError(response_json['error']['error_msg'])
+    if 'error' in decoded_response:
+        raise requests.exceptions.HTTPError(decoded_response['error']['error_msg'])
 
-    return response_json['response']['short_url']
+    return decoded_response['response']['short_url']
 
 
 def count_clicks(token, link):
@@ -39,12 +39,12 @@ def count_clicks(token, link):
 
     response = requests.get(api_url, params=params)
     response.raise_for_status()
-    response_json = response.json()
+    decoded_response = response.json()
 
-    if 'error' in response_json:
-        raise requests.exceptions.HTTPError(response_json['error']['error_msg'])
+    if 'error' in decoded_response:
+        raise requests.exceptions.HTTPError(decoded_response['error']['error_msg'])
 
-    stats = response_json['response']['stats']
+    stats = decoded_response['response']['stats']
     return sum(item['views'] for item in stats)
 
 
@@ -66,9 +66,9 @@ def is_shorten_link(token, url):
 
     response = requests.get(api_url, params=params)
     response.raise_for_status()
-    response_json = response.json()
+    decoded_response = response.json()
 
-    return 'response' in response_json and 'error' not in response_json
+    return 'response' in decoded_response and 'error' not in decoded_response
 
 
 def main():
